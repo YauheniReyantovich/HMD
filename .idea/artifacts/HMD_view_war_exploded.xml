@@ -60,8 +60,8 @@
           <element id="library" level="project" name="Maven: org.apache.tomcat.embed:tomcat-embed-core:8.5.31" />
         </element>
       </element>
-      <element id="javaee-facet-resources" facet="HMD-view/web/Web2" />
       <element id="javaee-facet-resources" facet="HMD-view/web/Web" />
+      <element id="javaee-facet-resources" facet="HMD-view/web/Web2" />
     </root>
   </artifact>
 </component>

@@ -1,8 +1,7 @@
-package org.reyantovich.yauheni.pojo;
+package org.reyantovich.yauheni.hmdbase;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;

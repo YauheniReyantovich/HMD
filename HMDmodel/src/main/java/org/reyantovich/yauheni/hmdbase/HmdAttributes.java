@@ -1,7 +1,6 @@
-package org.reyantovich.yauheni.pojo;
+package org.reyantovich.yauheni.hmdbase;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.UUID;
 
 @Entity

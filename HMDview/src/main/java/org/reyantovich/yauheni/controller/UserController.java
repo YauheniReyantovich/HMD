@@ -1,9 +1,7 @@
 package org.reyantovich.yauheni.controller;
 
 
-import org.reyantovich.yauheni.hmdbase.Developer;
 import org.reyantovich.yauheni.model.pojo.User;
-import org.reyantovich.yauheni.service.DeveloperService;
 import org.reyantovich.yauheni.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-public class DeveloperController {
+public class UserController {
 
     private UserService userService;
 
@@ -41,7 +39,7 @@ public class DeveloperController {
     }
 
     @Autowired
-    public DeveloperController(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 }

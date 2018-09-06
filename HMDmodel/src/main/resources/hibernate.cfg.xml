@@ -23,7 +23,11 @@
         </property>
 
         <!-- List of XML mapping files -->
-        <mapping resource="Developer.hbm.xml"/>
+        <mapping resource="ObjectType.hbm.xml"/>
+        <mapping resource="Attributes.hbm.xml"/>
+        <mapping resource="Objects.hbm.xml"/>
+        <mapping resource="Values.hbm.xml"/>
+        <mapping resource="Refs.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>

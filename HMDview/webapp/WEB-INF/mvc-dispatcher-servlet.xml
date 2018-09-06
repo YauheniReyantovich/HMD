@@ -7,7 +7,8 @@
 
     <context:component-scan base-package="org.reyantovich.yauheni.controller,
                                             org.reyantovich.yauheni.service.*
-                                            org.reyantovich.yauheni.runner"/>
+                                            org.reyantovich.yauheni.runner,
+                                            org.reyantovich.yauheni.dao"/>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>

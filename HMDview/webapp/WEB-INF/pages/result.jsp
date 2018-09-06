@@ -1,32 +1,24 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
-    <title>Developer Info</title>
+    <title>User Info</title>
 </head>
 <body>
 
-<h2>Developer Information</h2>
+<h2>User Information</h2>
 <table>
     <tr>
-        <td>Id</td>
-        <td>${id}</td>
+        <td>login</td>
+        <td>${login}</td>
     </tr>
     <tr>
     <tr>
-        <td>FistName</td>
-        <td>${firstName}</td>
+        <td>password</td>
+        <td>${password}</td>
     </tr>
     <tr>
-        <td>LastName</td>
-        <td>${lastName}</td>
-    </tr>
-    <tr>
-        <td>Specialty</td>
-        <td>${specilaty}</td>
-    </tr>
-    <tr>
-        <td>Experience</td>
-        <td>${experience}</td>
+        <td>role</td>
+        <td>${role}</td>
     </tr>
 </table>
 </body>

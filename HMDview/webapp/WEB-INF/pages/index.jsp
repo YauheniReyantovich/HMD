@@ -5,6 +5,6 @@
     <title>Home Page</title>
 </head>
 <body>
-<h3><a href="developer">Add Developer</a></h3>
+<h3><a href="user">Add User</a></h3>
 </body>
 </html>

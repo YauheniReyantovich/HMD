@@ -1,6 +1,6 @@
-package org.reyantovich.yauheni.pojo;
+package org.reyantovich.yauheni.model.pojo;
 
-import org.reyantovich.yauheni.enums.UserRoles;
+import org.reyantovich.yauheni.model.enums.UserRoles;
 
 public class User {
 
@@ -9,11 +9,11 @@ public class User {
     private UserRoles role;
 
 
-    public String getlogin() {
+    public String getLogin() {
         return login;
     }
 
-    public void setlogin(String name) {
+    public void setLogin(String name) {
         this.login = name;
     }
 
@@ -25,8 +25,8 @@ public class User {
         this.password = password;
     }
 
-    public UserRoles getRole() {
-        return role;
+    public String getRole() {
+        return role.toString();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class User {
                 '}';
     }
 
-    public void setRole(UserRoles role) {
-        this.role = role;
+    public void setRole(String role) {
+        this.role = UserRoles.get(role);
     }
 }

@@ -1,14 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="org.reyantovich.yauheni.hmdbase.HmdValues" table="HMD_VALUES">
+        <meta attribute="class-description">
+            This class contains mapping between objects and its values.
+        </meta>
+        <composite-id>
+            <key-many-to-one name="object" column="object_id"/>
+            <key-many-to-one name="attribute" column="attr_id"/>
+        </composite-id>
+        <property name="value" type="string" column="value"/>
+    </class>
+</hibernate-mapping>

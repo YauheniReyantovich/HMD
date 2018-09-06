@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="org.reyantovich.yauheni.hmdbase.HmdObjectType" table="HMD_OBJECT_TYPE">
+        <meta attribute="class-description">
+            This class contains list of object types.
+        </meta>
+        <id name="objectTypeId" column="object_type_id"/>
+        <property name="name" type="string" column="name"/>
+    </class>
+</hibernate-mapping>

@@ -1,46 +1,36 @@
-package org.reyantovich.yauheni.runner;
+package org.reyantovich.yauheni.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.reyantovich.yauheni.pojo.Developer;
-import org.reyantovich.yauheni.pojo.HmdObjectType;
+import org.reyantovich.yauheni.hmdbase.HmdObjectType;
+import org.reyantovich.yauheni.runner.SessionHolder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
-import javax.xml.crypto.dsig.spec.HMACParameterSpec;
-import java.math.BigInteger;
-import java.util.List;
 import java.util.UUID;
 
 @Component
 public class ObjectTypeDao {
 
-    void addObjectType(String name){
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = null;
+    private SessionHolder sessionHolder;
 
-        transaction = session.beginTransaction();
+    public void addObjectType(String name){
+        sessionHolder.init();
         HmdObjectType objectType = new HmdObjectType(UUID.randomUUID(), name);
-        session.save(objectType);
-        transaction.commit();
-        session.close();
-        sessionFactory.close();
+        sessionHolder.saveAndCommit(objectType);
+        sessionHolder.close();
     }
 
-    HmdObjectType getObjectType(){
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = null;
-
-        transaction = session.beginTransaction();
-        List ot = session.createQuery("FROM HmdObjectType ").list();
-        transaction.commit();
-        session.close();
-        sessionFactory.close();
-        return (HmdObjectType) ot.get(0);
+    public HmdObjectType getObjectType(UUID id){
+        sessionHolder.init();
+        HmdObjectType objectType = sessionHolder.getSession().get(HmdObjectType.class, id);
+        sessionHolder.commit();
+        sessionHolder.close();
+        return objectType;
     }
+
+    @Autowired
+    public ObjectTypeDao(SessionHolder sessionHolder){this.sessionHolder = sessionHolder;}
 }

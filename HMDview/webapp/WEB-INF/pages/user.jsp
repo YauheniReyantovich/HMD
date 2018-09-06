@@ -6,12 +6,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Developer</title>
+    <title>User</title>
 </head>
 <body>
 
-<h2>Enter developer information</h2>
-<form:form method="post" action="addDeveloper">
+<h2>Enter user information</h2>
+<form:form method="post" action="addUser">
     <table>
         <tr>
             <td class="text-warning"><form:label path="login">Login</form:label></td>
