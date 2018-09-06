@@ -33,7 +33,7 @@ public class UserController {
         userService.addUser(user);
         model.addAttribute("login", user.getLogin());
         model.addAttribute("password", user.getPassword());
-        model.addAttribute("role", user.getRole().toString());
+        model.addAttribute("role", user.getRole());
 
         return "result";
     }

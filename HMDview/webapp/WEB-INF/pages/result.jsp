@@ -1,23 +1,25 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>User Info</title>
+    <title><spring:message code="user_information"/> </title>
 </head>
 <body>
 
-<h2>User Information</h2>
+<h2><spring:message code="user_information"/></h2>
 <table>
     <tr>
-        <td>login</td>
+        <td><spring:message code="login"/></td>
         <td>${login}</td>
     </tr>
     <tr>
     <tr>
-        <td>password</td>
+        <td><spring:message code="password"/></td>
         <td>${password}</td>
     </tr>
     <tr>
-        <td>role</td>
+        <td><spring:message code="role"/></td>
         <td>${role}</td>
     </tr>
 </table>

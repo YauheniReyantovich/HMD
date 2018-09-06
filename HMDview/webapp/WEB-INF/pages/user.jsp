@@ -1,4 +1,6 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,28 +8,32 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>User</title>
+    <title><spring:message code="user"/> </title>
 </head>
 <body>
 
-<h2>Enter user information</h2>
+<span style="float: right">
+    <a href="?lang=en">EN</a>
+    <a href="?lang=ru">RU</a>
+</span>
+<h2><spring:message code="enter_user_information"/> </h2>
 <form:form method="post" action="addUser">
     <table>
         <tr>
-            <td class="text-warning"><form:label path="login">Login</form:label></td>
+            <td class="text-warning"><form:label path="login"><spring:message code="login"/> </form:label></td>
             <td><form:input path="login" /></td>
         </tr>
         <tr>
-            <td><form:label path="password">First Name</form:label></td>
+            <td><form:label path="password"><spring:message code="password"/></form:label></td>
             <td><form:input path="password" /></td>
         </tr>
         <tr>
-            <td><form:label path="role">last Name</form:label></td>
+            <td><form:label path="role"><spring:message code="role"/></form:label></td>
             <td><form:input path="role" /></td>
         </tr>
         <tr>
             <td colspan="2">
-                <input type="submit" value="Submit"/>
+                <input type="submit" value="<spring:message code="submit"/>"/>
             </td>
         </tr>
     </table>
