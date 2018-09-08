@@ -2,7 +2,7 @@ package org.reyantovich.yauheni.dao.impl;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.reyantovich.yauheni.SqlService;
+import org.reyantovich.yauheni.HqlService;
 import org.reyantovich.yauheni.attributesIds.UserObjectType.UserAttributes;
 import org.reyantovich.yauheni.dao.UserDao;
 import org.reyantovich.yauheni.hmdbase.HmdAttributes;
@@ -22,16 +22,51 @@ public class UserDaoImpl implements UserDao {
     private SessionHolder sessionHolder;
 
     @Override
+    public User findByUsername(String username){
+
+        sessionHolder = sessionHolder.init();
+        Session session = sessionHolder.getSession();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(HqlService.SQL_PROPERTIES);
+        try{
+            Query sqlQuery = session.createQuery(resourceBundle.getString(HqlService.GET_TWO_OBJECT_ATTRIBUTES_BY_ANOTHER_ATTRIBUTE));
+
+            sqlQuery.setParameter("value", username);
+            sqlQuery.setParameter("givenAttr", UserAttributes.LOGIN);
+            sqlQuery.setParameter("requiredAttr1", UserAttributes.PASSWORD);
+            sqlQuery.setParameter("requiredAttr2", UserAttributes.ROLE);
+            sqlQuery.setParameter("objOTId", UserAttributes.USER);
+
+            Object[] result = (Object[]) sqlQuery.getSingleResult();
+
+            User user = new User();
+            user.setLogin(username);
+            user.setPassword((String) result[0]);
+            user.setRole((String) result[1]);
+
+            return user;
+
+        }
+        catch (Exception e){
+            session.getTransaction().rollback();
+            e.printStackTrace();
+        }
+        finally {
+            sessionHolder.close();
+        }
+        return null;
+    }
+
+    @Override
     public User getUser(String login, String password) {
 
         sessionHolder = sessionHolder.init();
         Session session = sessionHolder.getSession();
-        ResourceBundle resourceBundle = ResourceBundle.getBundle(SqlService.SQL_PROPERTIES);
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(HqlService.SQL_PROPERTIES);
         List results;
         User user = null;
         try {
 
-            Query sqlQuery = session.createQuery(resourceBundle.getString(SqlService.GET_USER_ATTRIBUTES_BY_LOGIN_AND_PASSWORD));
+            Query sqlQuery = session.createQuery(resourceBundle.getString(HqlService.GET_USER_ATTRIBUTES_BY_LOGIN_AND_PASSWORD));
 
             sqlQuery.setParameter("login", login);
             sqlQuery.setParameter("password", password);
@@ -80,24 +115,32 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void addUser(User user) {
-        sessionHolder = sessionHolder.init();
-        Session session = sessionHolder.getSession();
-        HmdObjectType userObjectType = session.get(HmdObjectType.class, UserAttributes.USER_UUID);
-        HmdObjects object = new HmdObjects(UUID.randomUUID(), userObjectType);
-        sessionHolder.save(object);
+        if(user != null) {
+            sessionHolder = sessionHolder.init();
+            Session session = sessionHolder.getSession();
+            HmdObjectType userObjectType = session.get(HmdObjectType.class, UserAttributes.USER_UUID);
+            HmdObjects object = new HmdObjects(UUID.randomUUID(), userObjectType);
+            sessionHolder.save(object);
 
-        sessionHolder.save(
-                new HmdValues(object, session.get(HmdAttributes.class, UserAttributes.LOGIN_UUID), user.getLogin())
-        );
-        sessionHolder.save(
-                new HmdValues(object, session.get(HmdAttributes.class, UserAttributes.PASSWORD_UUID), user.getPassword())
-        );
-        sessionHolder.save(
-                new HmdValues(object, session.get(HmdAttributes.class, UserAttributes.ROLE_UUID), user.getRole())
-        );
+            if(user.getLogin() != null) {
+                sessionHolder.save(
+                        new HmdValues(object, session.get(HmdAttributes.class, UserAttributes.LOGIN_UUID), user.getLogin())
+                );
+            }
+            if(user.getPassword() != null) {
+                sessionHolder.save(
+                        new HmdValues(object, session.get(HmdAttributes.class, UserAttributes.PASSWORD_UUID), user.getPassword())
+                );
+            }
+            if(user.getRole() != null) {
+                sessionHolder.save(
+                        new HmdValues(object, session.get(HmdAttributes.class, UserAttributes.ROLE_UUID), user.getRole())
+                );
+            }
 
-        sessionHolder.commit();
-        sessionHolder.close();
+            sessionHolder.commit();
+            sessionHolder.close();
+        }
     }
 
     @Autowired

@@ -25,7 +25,7 @@ public class MainRunner {
         ctx.refresh();
 
         UserDao userDao = ctx.getBean(UserDaoImpl.class);
-        User user = userDao.getUser("Darment", "1234");
+        User user = userDao.findByUsername("Darment");
         System.out.println(user);
 
     }

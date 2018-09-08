@@ -6,9 +6,8 @@ import java.util.Map;
 
 public enum UserRoles {
 
-    ADMIN("Admin"),
-    REGISTERED("Registered"),
-    UNREGISTERED("Unregistered");
+    ROLE_ADMIN("ROLE_ADMIN"),
+    ROLE_REGISTERED("ROLE_REGISTERED");
 
     private String role;
 
@@ -25,6 +24,6 @@ public enum UserRoles {
         return Arrays.stream(values())
                 .filter(env -> env.role.equals(url))
                 .findFirst()
-                .orElse(UserRoles.UNREGISTERED /*default value*/);
+                .orElse(UserRoles.ROLE_REGISTERED /*default value*/);
     }
 }

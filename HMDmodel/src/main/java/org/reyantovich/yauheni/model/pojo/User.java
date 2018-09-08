@@ -7,7 +7,7 @@ public class User {
     private String login;
     private String password;
     private UserRoles role;
-
+    transient private String confirmPassword;
 
     public String getLogin() {
         return login;
@@ -27,6 +27,16 @@ public class User {
 
     public String getRole() {
         return role.toString();
+    }
+
+    public void setRole(UserRoles userRole){this.role = userRole;}
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     @Override
