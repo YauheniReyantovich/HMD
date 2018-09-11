@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css?family=Lato|Pacifico|Raleway');
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+
+body {
+    background: #ddd url('../images/fw-2.jpg');
+    background-attachment: fixed;
+    background-size: contain;
+    font-family: "Lato";
+    font-weight: 300;
+    font-size: 16px;
+
+    -webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: "Raleway";
+    font-weight: 300;
+    color: #333;
+}
+
+p{
+    line-height: 28px;
+    margin-bottom: 25px;
+}
+
+.centered{
+    text-align: center;
+}
+
+a{
+    color: blue;
+}
+
+a:hover, a:focus{
+    color: white;
+    text-decoration: none;
+    outline: 0;
+}
+
+hr{
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+.logo{
+    margin-top: 15px;
+    font-family: "Pacifico";
+    font-weight: 300;
+    font-size: 40px;
+}
+
+.ital-green{
+    color: #009246;
+}
+
+.ital-white{
+    color: #F1F2F1;
+}
+
+.ital-red{
+    color: #CE2B37;
+}
+
+.right-menu{
+    text-align: right;
+    font-size: 30px;
+    color: gray;
+}
+
+.choose{
+    margin-top: 10px;
+}
+
+.high{
+    height: 90vh;
+}
+
+.making{
+    background: #ddd url('../images/tryMaking.jpg');
+    background-size: auto;
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: 30%;
+}
+
+.random{
+    background: #ddd url('../images/random.jpg');
+    background-size: auto;
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: 30%;
+}
+
+.dayBest{
+    background: #ddd url('../images/dayBest.jpg');
+    background-size: auto;
+    margin-left: 8px;
+    margin-right: 8px;
+    max-width: 30%;
+}
+
+.vertical-middle{
+    height: 37vh;
+    vertical-align: middle;
+    display: table-cell;
+    width: 500px;
+    text-align: center;
+    font-size: 50px;
+    font-weight: 800;
+    color: black;
+}
+
+.block{
+    -moz-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    -webkit-transition: all 1s ease-out;
+}
+.block:hover {
+    -webkit-transform: scale(1.02);
+    -moz-transform: scale(1.02);
+    -o-transform: scale(1.02);
+}

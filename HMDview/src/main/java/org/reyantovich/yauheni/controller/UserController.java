@@ -91,6 +91,11 @@ public class UserController {
         return "admin";
     }
 
+    @RequestMapping(value = "/main_page", method = RequestMethod.GET)
+    public String mainPage(Model model){
+        return "main_page";
+    }
+
     @Autowired
     public UserController(UserService userService, SecurityService securityService, UserValidator userValidator) {
         this.userService = userService;
