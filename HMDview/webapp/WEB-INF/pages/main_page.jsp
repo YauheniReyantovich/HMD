@@ -29,19 +29,19 @@
                     <span class="ital-white">M</span>
                     <span class="ital-red">D</span>
                 </p>
-                <a class="right-menu" href="#">Profile</a>
+                <a class="right-menu" href="my_profile">Profile</a>
             </div>
         </div>
 
         <div class="container choose">
             <div class="row centered high">
-                <a class="col-lg-4 making block" href="#">
+                <a class="col-lg-4 making block" href="create_pizza">
                     <h6 class="vertical-middle">Сделай сам</h6>
                 </a>
-                <a class="col-lg-4 random block" href="#">
+                <a class="col-lg-4 random block" href="pizza_view">
                     <h6 class="vertical-middle">Создать случайно</h6>
                 </a>
-                <a class="col-lg-4 dayBest block" href="#">
+                <a class="col-lg-4 dayBest block" href="pizza_view">
                     <h6 class="vertical-middle">Пицца дня</h6>
                 </a>
             </div>

@@ -21,10 +21,6 @@ public class UserController {
 
     private UserService userService;
 
-    private SecurityService securityService;
-
-    private UserValidator userValidator;
-
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index() {
         return "/index";
@@ -46,41 +42,6 @@ public class UserController {
         return "result";
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registration(Model model){
-        model.addAttribute("userForm", new User());
-
-        return "registration";
-    }
-
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model){
-        userValidator.validate(userForm, bindingResult);
-
-        if(bindingResult.hasErrors()){
-            return "registration";
-        }
-
-        userService.addUser(userForm);
-
-        securityService.autoLogin(userForm.getLogin(), userForm.getConfirmPassword());
-
-        return "redirect:/welcome";
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Model model, String error, String logout) {
-        if (error != null) {
-            model.addAttribute("error", "Username or password is incorrect");
-        }
-
-        if(logout != null){
-            model.addAttribute("message", "Logged out successfully.");
-        }
-
-        return "login";
-    }
-
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model){
         return "welcome";
@@ -96,10 +57,13 @@ public class UserController {
         return "main_page";
     }
 
+    @RequestMapping(value = "/my_profile", method = RequestMethod.GET)
+    public String myProfile(Model model){
+        return "my_profile";
+    }
+
     @Autowired
-    public UserController(UserService userService, SecurityService securityService, UserValidator userValidator) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.securityService = securityService;
-        this.userValidator = userValidator;
     }
 }
