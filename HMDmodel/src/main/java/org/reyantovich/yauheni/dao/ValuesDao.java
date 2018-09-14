@@ -12,20 +12,35 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Component
 public class ValuesDao {
 
     private SessionHolder sessionHolder;
 
+    public void addValue(UUID objectId, UUID attributeId, String value){
+        sessionHolder = sessionHolder.init();
+        Session session = sessionHolder.getSession();
+
+        HmdObjects object = session.get(HmdObjects.class, objectId);
+        HmdAttributes attribute = session.get(HmdAttributes.class, attributeId);
+
+        HmdValues val = new HmdValues(object, attribute, value);
+        sessionHolder.save(val);
+
+        sessionHolder.commit();
+        sessionHolder.close();
+    }
+
     public void addValues(HmdObjects object, Map<HmdAttributes, String> values){
-//        sessionHolder = sessionHolder.init();
+        sessionHolder = sessionHolder.init();
         for(Map.Entry<HmdAttributes, String> entry: values.entrySet()){
             HmdValues value = new HmdValues(object, entry.getKey(), entry.getValue());
             sessionHolder.save(value);
         }
-//        sessionHolder.commit();
-//        sessionHolder.close();
+        sessionHolder.commit();
+        sessionHolder.close();
     }
 
     public void getAllAttrs(HmdObjects object){
@@ -55,7 +70,7 @@ public class ValuesDao {
         }
         if(values != null) {
             for (Object value : values) {
-                System.out.println(((HmdValues) value).getValue() + " - " + ((HmdValues) value).getAttribute().getName());
+                System.out.println(((HmdValues) value).getValue() + " - " + ((HmdValues) value).getValuesId().getAttribute().getName());
             }
         }
     }

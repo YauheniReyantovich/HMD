@@ -3,7 +3,7 @@ package org.reyantovich.yauheni.dao.impl;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.reyantovich.yauheni.HqlService;
-import org.reyantovich.yauheni.attributesIds.UserObjectType.UserAttributes;
+import org.reyantovich.yauheni.attributesIds.UserAttributes;
 import org.reyantovich.yauheni.dao.UserDao;
 import org.reyantovich.yauheni.hmdbase.HmdAttributes;
 import org.reyantovich.yauheni.hmdbase.HmdObjectType;
@@ -119,7 +119,7 @@ public class UserDaoImpl implements UserDao {
             sessionHolder = sessionHolder.init();
             Session session = sessionHolder.getSession();
             HmdObjectType userObjectType = session.get(HmdObjectType.class, UserAttributes.USER_UUID);
-            HmdObjects object = new HmdObjects(UUID.randomUUID(), userObjectType);
+            HmdObjects object = new HmdObjects(userObjectType);
             sessionHolder.save(object);
 
             if(user.getLogin() != null) {

@@ -5,42 +5,28 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "HMD_VALUES")
-@IdClass(HmdValues.ValuesId.class)
+@Table(name = "hmd_values")
 public class HmdValues implements Serializable{
 
-    @Id
-    @ManyToOne
-    private HmdObjects object;
+    @EmbeddedId
+    private ValuesId valuesId;
 
-    @Id
-    @ManyToOne
-    private HmdAttributes attribute;
-
+    @Column(name = "value")
     private String value;
 
     public HmdValues(){}
 
     public HmdValues(HmdObjects object, HmdAttributes attribute, String value) {
-        this.object = object;
-        this.attribute = attribute;
+        this.valuesId = new ValuesId(object, attribute);
         this.value = value;
     }
 
-    public HmdAttributes getAttribute() {
-        return attribute;
+    public ValuesId getValuesId() {
+        return valuesId;
     }
 
-    public void setAttribute(HmdAttributes attribute) {
-        this.attribute = attribute;
-    }
-
-    public HmdObjects getObject() {
-        return object;
-    }
-
-    public void setObject(HmdObjects object) {
-        this.object = object;
+    public void setValuesId(ValuesId valuesId) {
+        this.valuesId = valuesId;
     }
 
     public String getValue() {
@@ -52,77 +38,24 @@ public class HmdValues implements Serializable{
     }
 
     @Override
-    public String toString() {
-        return "HmdValues{" +
-                "attribute=" + attribute +
-                ", object=" + object +
-                ", value='" + value + '\'' +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         HmdValues hmdValues = (HmdValues) o;
-        return Objects.equals(attribute, hmdValues.attribute) &&
-                Objects.equals(object, hmdValues.object) &&
+        return Objects.equals(valuesId, hmdValues.valuesId) &&
                 Objects.equals(value, hmdValues.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(attribute, object, value);
+        return Objects.hash(valuesId, value);
     }
 
-    public class ValuesId implements Serializable{
-
-        private HmdObjects object;
-        private HmdAttributes attribute;
-
-        public ValuesId(){}
-
-        public ValuesId(HmdObjects object, HmdAttributes attribute) {
-            this.object = object;
-            this.attribute = attribute;
-        }
-
-        public HmdAttributes getAttribute() {
-            return attribute;
-        }
-
-        public void setAttribute(HmdAttributes attribute) {
-            this.attribute = attribute;
-        }
-
-        public HmdObjects getObject() {
-            return object;
-        }
-
-        public void setObject(HmdObjects object) {
-            this.object = object;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            ValuesId valuesId = (ValuesId) o;
-            return Objects.equals(attribute, valuesId.attribute) &&
-                    Objects.equals(object, valuesId.object);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(attribute, object);
-        }
-
-        @Override
-        public String toString() {
-            return "ValuesId{" +
-                    "attribute=" + attribute +
-                    ", object=" + object +
-                    '}';
-        }
+    @Override
+    public String toString() {
+        return "HmdValues{" +
+                "valuesId=" + valuesId +
+                ", value='" + value + '\'' +
+                '}';
     }
 }

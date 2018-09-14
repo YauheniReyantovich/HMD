@@ -5,61 +5,24 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "HMD_REFS")
-@IdClass(HmdRefs.RefId.class)
+@Table(name = "hmd_refs")
 public class HmdRefs implements Serializable{
 
-    @Id
-    @ManyToOne
-    private HmdAttributes attribute;
-
-    @Id
-    @ManyToOne
-    private HmdObjects object;
-
-    @Id
-    @ManyToOne
-    private HmdObjects reference;
+    @EmbeddedId
+    private RefsId refsId;
 
     public HmdRefs(){}
 
-    public HmdRefs(HmdAttributes attribute, HmdObjects object, HmdObjects reference) {
-        this.attribute = attribute;
-        this.object = object;
-        this.reference = reference;
+    public HmdRefs(HmdAttributes attribute, HmdObjects object, HmdObjects ref) {
+        this.refsId = new RefsId(attribute, object, ref);
     }
 
-    public HmdAttributes getAttribute() {
-        return attribute;
+    public RefsId getRefsId() {
+        return refsId;
     }
 
-    public void setAttribute(HmdAttributes attribute) {
-        this.attribute = attribute;
-    }
-
-    public HmdObjects getObject() {
-        return object;
-    }
-
-    public void setObject(HmdObjects object) {
-        this.object = object;
-    }
-
-    public HmdObjects getReference() {
-        return reference;
-    }
-
-    public void setReference(HmdObjects reference) {
-        this.reference = reference;
-    }
-
-    @Override
-    public String toString() {
-        return "HmdRefs{" +
-                "attributes=" + attribute +
-                ", object=" + object +
-                ", ref=" + reference +
-                '}';
+    public void setRefsId(RefsId refsId) {
+        this.refsId = refsId;
     }
 
     @Override
@@ -67,77 +30,18 @@ public class HmdRefs implements Serializable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         HmdRefs hmdRefs = (HmdRefs) o;
-        return Objects.equals(attribute, hmdRefs.attribute) &&
-                Objects.equals(object, hmdRefs.object) &&
-                Objects.equals(reference, hmdRefs.reference);
+        return Objects.equals(refsId, hmdRefs.refsId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(attribute, object, reference);
+        return Objects.hash(refsId);
     }
 
-    public class RefId implements Serializable{
-
-        private HmdAttributes attribute;
-        private HmdObjects object;
-        private HmdObjects reference;
-
-        public RefId(){}
-
-        public RefId(HmdAttributes attribute, HmdObjects object, HmdObjects reference) {
-            this.attribute = attribute;
-            this.object = object;
-            this.reference = reference;
-        }
-
-        public HmdAttributes getAttribute() {
-            return attribute;
-        }
-
-        public void setAttribute(HmdAttributes attribute) {
-            this.attribute = attribute;
-        }
-
-        public HmdObjects getObject() {
-            return object;
-        }
-
-        public void setObject(HmdObjects object) {
-            this.object = object;
-        }
-
-        public HmdObjects getReference() {
-            return reference;
-        }
-
-        public void setReference(HmdObjects reference) {
-            this.reference = reference;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            RefId refId = (RefId) o;
-            return Objects.equals(attribute, refId.attribute) &&
-                    Objects.equals(object, refId.object) &&
-                    Objects.equals(reference, refId.reference);
-        }
-
-        @Override
-        public int hashCode() {
-
-            return Objects.hash(attribute, object, reference);
-        }
-
-        @Override
-        public String toString() {
-            return "RefId{" +
-                    "attribute=" + attribute +
-                    ", object=" + object +
-                    ", reference=" + reference +
-                    '}';
-        }
+    @Override
+    public String toString() {
+        return "HmdRefs{" +
+                "refsId=" + refsId +
+                '}';
     }
 }

@@ -2,6 +2,8 @@ package org.reyantovich.yauheni.model.pojo;
 
 import org.reyantovich.yauheni.model.enums.UserRoles;
 
+import java.util.Objects;
+
 public class User {
 
     private String login;
@@ -46,6 +48,23 @@ public class User {
                 ", password='" + password + '\'' +
                 ", role=" + role +
                 '}';
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(login, user.login) &&
+                Objects.equals(password, user.password) &&
+                role == user.role &&
+                Objects.equals(confirmPassword, user.confirmPassword);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(login, password, role, confirmPassword);
     }
 
     public void setRole(String role) {

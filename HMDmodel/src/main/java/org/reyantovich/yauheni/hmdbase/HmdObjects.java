@@ -1,31 +1,40 @@
 package org.reyantovich.yauheni.hmdbase;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "HMD_OBJECTS")
+@Table(name = "hmd_objects")
 public class HmdObjects implements Serializable{
 
     @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "object_id")
     private UUID objectId;
 
     @ManyToOne
+    @JoinColumn(name = "object_type_id")
     private HmdObjectType objectType;
 
-    @OneToMany
+    @OneToMany(mappedBy = "valuesId.object")
     private Set<HmdValues> values = new HashSet<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "refsId.object")
+    private Set<HmdRefs> objects = new HashSet<>();
+
+    @OneToMany(mappedBy = "refsId.ref")
     private Set<HmdRefs> refs = new HashSet<>();
 
     public HmdObjects(){}
 
-    public HmdObjects(UUID objectId, HmdObjectType objectType) {
-        this.objectId = objectId;
+    public HmdObjects(HmdObjectType objectType) {
         this.objectType = objectType;
     }
 
@@ -52,8 +61,22 @@ public class HmdObjects implements Serializable{
     @Override
     public String toString() {
         return "HmdObjects{" +
-                "objectId=" + objectId +
-                ", objectType=" + objectType +
+                "objectId=" + objectId.toString() +
+                ", objectType=" + objectType.toString() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HmdObjects objects = (HmdObjects) o;
+        return Objects.equals(objectId, objects.objectId) &&
+                Objects.equals(objectType, objects.objectType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(objectId, objectType);
     }
 }

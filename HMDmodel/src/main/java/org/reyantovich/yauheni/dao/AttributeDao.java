@@ -15,7 +15,7 @@ public class AttributeDao {
 
     public void addAttribute(HmdObjectType objectType, String name){
         sessionHolder = sessionHolder.init();
-        HmdAttributes attribute = new HmdAttributes(UUID.randomUUID(), objectType, name);
+        HmdAttributes attribute = new HmdAttributes(objectType, name);
         sessionHolder.saveAndCommit(attribute);
         sessionHolder.close();
     }

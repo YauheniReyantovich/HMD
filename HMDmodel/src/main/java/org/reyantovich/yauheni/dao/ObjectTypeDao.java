@@ -18,7 +18,7 @@ public class ObjectTypeDao {
 
     public void addObjectType(String name){
         sessionHolder.init();
-        HmdObjectType objectType = new HmdObjectType(UUID.randomUUID(), name);
+        HmdObjectType objectType = new HmdObjectType(name);
         sessionHolder.saveAndCommit(objectType);
         sessionHolder.close();
     }

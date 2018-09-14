@@ -1,5 +1,6 @@
 package org.reyantovich.yauheni.runner;
 
+import org.reyantovich.yauheni.attributesIds.UserAttributes;
 import org.reyantovich.yauheni.dao.*;
 import org.reyantovich.yauheni.dao.impl.UserDaoImpl;
 import org.reyantovich.yauheni.hmdbase.HmdObjectType;
@@ -13,21 +14,44 @@ public class MainRunner {
     public static void main(String[] args){
 
 //        addObjectByObjectTypeId(UserAttributes.USER);
-//        addUser(UserRoles.REGISTERED, "Pavel", "4321");
+//        addObjectType("Ingredient");
+//        addAttributeByObjectTypeId(UserAttributes.USER, "Role");
 
+//        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+//        ctx.register(AttributeDao.class);
+//        ctx.register(ObjectTypeDao.class);
+//        ctx.register(SessionHolder.class);
+//        ctx.register(ObjectDao.class);
+//        ctx.register(ValuesDao.class);
+//        ctx.register(UserDaoImpl.class);
+//        ctx.refresh();
+//
+//        UserDao userDao = ctx.getBean(UserDaoImpl.class);
+//        User user = userDao.findByUsername("Darment");
+//        System.out.println(user);
+//
+//        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+//        ctx.register(ObjectDao.class);
+//        ctx.register(SessionHolder.class);
+//        ctx.refresh();
+//
+//        ObjectDao objectDao = ctx.getBean(ObjectDao.class);
+//        List<UUID> objects = objectDao.getAllObjectsOfObjectType(UserAttributes.USER_UUID);
+//
+//        for(UUID object: objects){
+//            System.out.println(object);
+//        }
+
+    }
+
+    static private void addObjectType(String objectType){
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
-        ctx.register(AttributeDao.class);
         ctx.register(ObjectTypeDao.class);
         ctx.register(SessionHolder.class);
-        ctx.register(ObjectDao.class);
-        ctx.register(ValuesDao.class);
-        ctx.register(UserDaoImpl.class);
         ctx.refresh();
 
-        UserDao userDao = ctx.getBean(UserDaoImpl.class);
-        User user = userDao.findByUsername("Darment");
-        System.out.println(user);
-
+        ObjectTypeDao objectTypeDao = ctx.getBean(ObjectTypeDao.class);
+        objectTypeDao.addObjectType(objectType);
     }
 
     static private void addAttributeByObjectTypeId(String objectTypeId, String name){
