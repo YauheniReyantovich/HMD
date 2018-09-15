@@ -40,7 +40,7 @@ public class SecurityController {
 
         securityService.autoLogin(userForm.getLogin(), userForm.getConfirmPassword());
 
-        return "redirect:/welcome";
+        return "redirect:/main_page";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

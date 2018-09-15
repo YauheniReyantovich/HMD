@@ -8,18 +8,18 @@
 		http://www.springframework.org/schema/security/spring-security.xsd">
 
     <http auto-config="true">
-        <intercept-url pattern="/" access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED')"/>
-        <intercept-url pattern="/welcome" access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED', 'ROLE_ANONYMOUS')"/>
-        <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/index" access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED', 'ROLE_ANONYMOUS')"/>
-        <intercept-url pattern="/main_page" access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED', 'ROLE_ANONYMOUS')"/>
-        <intercept-url pattern="/my_profile" access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED', 'ROLE_ANONYMOUS')"/>
-        <intercept-url pattern="/create_pizza" access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED', 'ROLE_ANONYMOUS')"/>
-        <intercept-url pattern="/pizza_view" access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED', 'ROLE_ANONYMOUS')"/>
-        <intercept-url pattern="/edit_recommendation" access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED', 'ROLE_ANONYMOUS')"/>
-        <intercept-url pattern="/recommendation" access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED', 'ROLE_ANONYMOUS')"/>
+        <intercept-url pattern="/"                      access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED')"/>
+        <intercept-url pattern="/admin"                 access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/index"                 access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED', 'ROLE_ANONYMOUS')"/>
+        <intercept-url pattern="/main_page"             access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED', 'ROLE_ANONYMOUS')"/>
+        <intercept-url pattern="/my_profile"            access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED', 'ROLE_ANONYMOUS')"/>
+        <intercept-url pattern="/create_pizza"          access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED', 'ROLE_ANONYMOUS')"/>
+        <intercept-url pattern="/pizza_view"            access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED', 'ROLE_ANONYMOUS')"/>
+        <intercept-url pattern="/edit_recommendation"   access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED', 'ROLE_ANONYMOUS')"/>
+        <intercept-url pattern="/recommendation"        access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED', 'ROLE_ANONYMOUS')"/>
+        <intercept-url pattern="/ingredients"           access="hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED', 'ROLE_ANONYMOUS')"/>
 
-        <form-login login-page="/login" default-target-url="/welcome" authentication-failure-url="/login?error"
+        <form-login login-page="/login" default-target-url="/main_page" authentication-failure-url="/login?error"
                     username-parameter="login" password-parameter="password"/>
 
         <logout logout-success-url="/login?logout"/>

@@ -20,48 +20,19 @@ public class ObjectDao {
 
     private SessionHolder sessionHolder;
 
-    public HmdObjects addObject(HmdObjectType objectType){
-        sessionHolder = sessionHolder.init();
-        HmdObjects object = new HmdObjects(objectType);
-        sessionHolder.saveAndCommit(object);
-        sessionHolder.close();
-        return object;
-    }
+    public List<HmdObjects> getAllObjectsOfObjectType(UUID objectTypeId) {
 
-    public HmdObjects getObject(UUID id){
-        sessionHolder = sessionHolder.init();
-        HmdObjects objects = sessionHolder.getSession().get(HmdObjects.class, id);
-        sessionHolder.commit();
-        sessionHolder.close();
-        return objects;
-    }
+        Session session = sessionHolder.getSession();
+        HmdObjectType objectType = session.get(HmdObjectType.class, objectTypeId);
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<HmdObjects> cr = cb.createQuery(HmdObjects.class);
+        Root<HmdObjects> root = cr.from(HmdObjects.class);
 
-    public List<UUID> getAllObjectsOfObjectType(UUID objectTypeId) {
+        cr.select(root).where(cb.equal(root.get("objectType"), objectType));
 
-        try {
-            sessionHolder.init();
-            Session session = sessionHolder.getSession();
-            HmdObjectType objectType = session.get(HmdObjectType.class, objectTypeId);
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<HmdObjects> cr = cb.createQuery(HmdObjects.class);
-            Root<HmdObjects> root = cr.from(HmdObjects.class);
-            cr.select(root).where(cb.equal(root.get("objectType"), objectType));
+        Query<HmdObjects> query = session.createQuery(cr);
 
-            Query<HmdObjects> query = session.createQuery(cr);
-            List<HmdObjects> results = query.getResultList();
-
-            List<UUID> res = new ArrayList<>();
-            for (HmdObjects result : results) {
-                res.add(result.getObjectId());
-            }
-            return res;
-        } catch (Exception e) {
-            sessionHolder.getSession().getTransaction().rollback();
-            e.printStackTrace();
-        } finally {
-            sessionHolder.close();
-        }
-        return null;
+        return query.getResultList();
     }
 
     @Autowired

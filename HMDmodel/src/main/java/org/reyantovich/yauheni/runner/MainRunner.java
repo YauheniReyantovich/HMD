@@ -1,10 +1,8 @@
 package org.reyantovich.yauheni.runner;
 
-import org.reyantovich.yauheni.attributesIds.UserAttributes;
+import org.reyantovich.yauheni.attributesIds.CategoryAttributes;
 import org.reyantovich.yauheni.dao.*;
-import org.reyantovich.yauheni.dao.impl.UserDaoImpl;
 import org.reyantovich.yauheni.hmdbase.HmdObjectType;
-import org.reyantovich.yauheni.model.pojo.User;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.UUID;
@@ -13,35 +11,23 @@ public class MainRunner {
 
     public static void main(String[] args){
 
-//        addObjectByObjectTypeId(UserAttributes.USER);
 //        addObjectType("Ingredient");
-//        addAttributeByObjectTypeId(UserAttributes.USER, "Role");
+        addAttributeByObjectTypeId(CategoryAttributes.CATEGORY, "EngName");
+
+
 
 //        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
-//        ctx.register(AttributeDao.class);
-//        ctx.register(ObjectTypeDao.class);
-//        ctx.register(SessionHolder.class);
-//        ctx.register(ObjectDao.class);
-//        ctx.register(ValuesDao.class);
-//        ctx.register(UserDaoImpl.class);
-//        ctx.refresh();
-//
-//        UserDao userDao = ctx.getBean(UserDaoImpl.class);
-//        User user = userDao.findByUsername("Darment");
-//        System.out.println(user);
-//
-//        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
 //        ctx.register(ObjectDao.class);
 //        ctx.register(SessionHolder.class);
+//        ctx.register(CategoryDaoImpl.class);
 //        ctx.refresh();
 //
-//        ObjectDao objectDao = ctx.getBean(ObjectDao.class);
-//        List<UUID> objects = objectDao.getAllObjectsOfObjectType(UserAttributes.USER_UUID);
+//        CategoryDaoImpl categoryDaoImpl = ctx.getBean(CategoryDaoImpl.class);
+//        Collection<Category> objects = categoryDaoImpl.getAllCategories();
 //
-//        for(UUID object: objects){
+//        for(Category object: objects){
 //            System.out.println(object);
 //        }
-
     }
 
     static private void addObjectType(String objectType){
@@ -67,20 +53,5 @@ public class MainRunner {
 
         AttributeDao bean = ctx.getBean(AttributeDao.class);
         bean.addAttribute(objectType, name);
-    }
-
-    static private void addObjectByObjectTypeId(String objectTypeId){
-        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
-        ctx.register(ObjectDao.class);
-        ctx.register(ObjectTypeDao.class);
-        ctx.register(SessionHolder.class);
-        ctx.refresh();
-
-        ObjectTypeDao otDao = ctx.getBean(ObjectTypeDao.class);
-        UUID objectTypeUUID = UUID.fromString(objectTypeId);
-        HmdObjectType objectType = otDao.getObjectType(objectTypeUUID);
-
-        ObjectDao bean = ctx.getBean(ObjectDao.class);
-        bean.addObject(objectType);
     }
 }

@@ -24,6 +24,15 @@ p{
     margin-bottom: 25px;
 }
 
+table{
+    width: 100%;
+    background: white;
+}
+
+td{
+    padding: 5px;
+}
+
 .centered{
     text-align: center;
 }
@@ -72,7 +81,7 @@ hr{
     color: gray;
 }
 
-.choose{
+.margin10px{
     margin-top: 10px;
 }
 
@@ -167,4 +176,108 @@ hr{
 
 .has-error {
     color: red
+}
+
+.fa-angle-double-down{
+    font-size: 50px;
+    color: white;
+}
+
+/*Сворачивающийся/разворачивающийся список*/
+.faq_list{
+    position: relative;
+    color: #192430;
+}
+.faq_item{
+    box-sizing: border-box;
+    padding: 10px 0 10px 15px;
+}
+.faq_item_title{
+    box-sizing: border-box;
+    font-size: 20px;
+    text-transform: uppercase;
+    position: relative;
+}
+.faq_show_all .faq_item_title{
+    font-weight: 900;
+    padding-left: 23px;
+    margin-top: 20px;
+}
+.faq_item_title_inner{
+    display: inline-block;
+    position: relative;
+    padding: 0 60px 0 0;
+    cursor: pointer;
+}
+.faq_item_title_inner:hover:before{
+    transform: translateY(1px);
+}
+.faq_item_title_inner:before{
+    position: absolute;
+    content: '';
+    right: 0;
+    top: 0;
+    width: 30px;
+    height: 100%;
+    background: url(../images/plus.png) no-repeat center center;
+    background-size: 50%;
+    cursor: pointer;
+    transition: .2s;
+    transition-timing-function: ease-in-out;
+}
+.faq_item_title_inner.open:before{
+    transform: rotate(180deg);
+}
+.faq_item_body{
+    font-size: 16px;
+    padding: 10px;
+    box-sizing: border-box;
+    display: none;
+}
+/*Сворачивающийся/разворачивающийся список*/
+
+.normal{
+    table-layout: fixed;
+}
+
+.verticalLine{
+    border-right: 1px solid #000;
+}
+
+.horizontalLine{
+    border-top: 1px solid #000;
+}
+
+
+/*Счетчик строк табилцы*/
+.demotable {
+    border-collapse: collapse;
+    counter-reset: schetchik;
+}
+.demotable tbody tr {
+    counter-increment: schetchik;
+}
+.demotable td,
+.demotable tbody tr:before {
+    padding: .1em .5em;
+    border: 1px solid #E7D5C0;
+}
+.demotable tbody tr:before {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+.demotable tbody tr:before,
+.demotable b:after {
+    content: counter(schetchik);
+    color: #978777;
+}
+/*Счетчик строк табилцы*/
+
+.hovered{
+    cursor: pointer;
+}
+
+.width100{
+    width: 100% !important;
 }

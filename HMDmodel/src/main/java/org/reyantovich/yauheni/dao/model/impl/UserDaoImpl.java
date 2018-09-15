@@ -1,10 +1,10 @@
-package org.reyantovich.yauheni.dao.impl;
+package org.reyantovich.yauheni.dao.model.impl;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.reyantovich.yauheni.HqlService;
 import org.reyantovich.yauheni.attributesIds.UserAttributes;
-import org.reyantovich.yauheni.dao.UserDao;
+import org.reyantovich.yauheni.dao.model.UserDao;
 import org.reyantovich.yauheni.hmdbase.HmdAttributes;
 import org.reyantovich.yauheni.hmdbase.HmdObjectType;
 import org.reyantovich.yauheni.hmdbase.HmdObjects;

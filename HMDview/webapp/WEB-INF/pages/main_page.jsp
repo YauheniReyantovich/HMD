@@ -1,5 +1,6 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
@@ -22,18 +23,9 @@
 
     <body>
 
-        <div class = "navbar  bg-dark">
-            <div class="container">
-                <p class="logo">
-                    <span class="ital-green">H</span>
-                    <span class="ital-white">M</span>
-                    <span class="ital-red">D</span>
-                </p>
-                <a class="right-menu" href="my_profile">Profile</a>
-            </div>
-        </div>
+        <%@include file="layouts/high_menu_bar.jsp"%>
 
-        <div class="container choose">
+        <div class="container margin10px">
             <div class="row centered high">
                 <a class="col-lg-4 making block" href="create_pizza">
                     <h6 class="vertical-middle">Сделай сам</h6>

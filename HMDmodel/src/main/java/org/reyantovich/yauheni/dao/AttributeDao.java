@@ -20,14 +20,6 @@ public class AttributeDao {
         sessionHolder.close();
     }
 
-    public HmdAttributes getAttribute(String id){
-        sessionHolder = sessionHolder.init();
-        HmdAttributes attribute = sessionHolder.getSession().get(HmdAttributes.class, UUID.fromString(id));
-        sessionHolder.commit();
-        sessionHolder.close();
-        return attribute;
-    }
-
     @Autowired
     public AttributeDao(SessionHolder sessionHolder){this.sessionHolder = sessionHolder;}
 

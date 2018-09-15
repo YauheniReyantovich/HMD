@@ -1,6 +1,6 @@
 package org.reyantovich.yauheni.service.impl;
 
-import org.reyantovich.yauheni.dao.UserDao;
+import org.reyantovich.yauheni.dao.model.UserDao;
 import org.reyantovich.yauheni.model.enums.UserRoles;
 import org.reyantovich.yauheni.model.pojo.User;
 import org.reyantovich.yauheni.service.UserService;

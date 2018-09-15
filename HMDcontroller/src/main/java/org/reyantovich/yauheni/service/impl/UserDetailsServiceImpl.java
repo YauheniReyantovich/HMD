@@ -1,6 +1,6 @@
 package org.reyantovich.yauheni.service.impl;
 
-import org.reyantovich.yauheni.dao.UserDao;
+import org.reyantovich.yauheni.dao.model.UserDao;
 import org.reyantovich.yauheni.model.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

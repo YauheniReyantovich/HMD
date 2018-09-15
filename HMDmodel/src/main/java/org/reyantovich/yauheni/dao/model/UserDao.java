@@ -1,4 +1,4 @@
-package org.reyantovich.yauheni.dao;
+package org.reyantovich.yauheni.dao.model;
 
 import org.reyantovich.yauheni.model.pojo.User;
 import org.springframework.stereotype.Service;
