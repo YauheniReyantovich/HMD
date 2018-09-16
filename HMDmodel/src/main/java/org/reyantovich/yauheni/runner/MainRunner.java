@@ -1,6 +1,5 @@
 package org.reyantovich.yauheni.runner;
 
-import org.reyantovich.yauheni.attributesIds.CategoryAttributes;
 import org.reyantovich.yauheni.dao.*;
 import org.reyantovich.yauheni.hmdbase.HmdObjectType;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -11,8 +10,8 @@ public class MainRunner {
 
     public static void main(String[] args){
 
-//        addObjectType("Ingredient");
-        addAttributeByObjectTypeId(CategoryAttributes.CATEGORY, "EngName");
+//        addObjectType("Layer");
+//        addAttributeByObjectTypeId(LayerAttributes.NAME, "Ingredients Chance");
 
 
 

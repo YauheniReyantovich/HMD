@@ -281,3 +281,10 @@ hr{
 .width100{
     width: 100% !important;
 }
+
+.likeCell{
+    border: none;
+    background: transparent;
+    outline:none;
+    width: 100%;
+}

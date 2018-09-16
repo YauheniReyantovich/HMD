@@ -1,7 +1,9 @@
 package org.reyantovich.yauheni.controller;
 
 import org.reyantovich.yauheni.model.pojo.Category;
+import org.reyantovich.yauheni.model.pojo.Layer;
 import org.reyantovich.yauheni.service.CategoryService;
+import org.reyantovich.yauheni.service.LayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,8 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.Collection;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class IngredientController {
@@ -19,11 +20,14 @@ public class IngredientController {
 
     private CategoryService categoryService;
 
+    private LayerService layerService;
+
     @RequestMapping(value = "/ingredients", method = RequestMethod.GET)
     public String ingredients(Model model){
-        Collection<Category> categories = categoryService.getAllCategories();
-        model.addAttribute("allCategories", categories);
+        model.addAttribute("allCategories", categoryService.getAllCategories());
         model.addAttribute("categoryForm", new Category());
+        model.addAttribute("allLayers", layerService.getAllLayers());
+        model.addAttribute("layerForm", new Layer());
         return "ingredients";
     }
 
@@ -35,7 +39,22 @@ public class IngredientController {
         return "redirect:/ingredients";
     }
 
+    @RequestMapping(value = "/addLayer", method = RequestMethod.POST)
+    public String addLayer(@ModelAttribute("layerForm") Layer layer, BindingResult bindingResult, Model model, @RequestParam("layerInput") Integer[] layerChances){
+        if( layer.getEngName() != null && !EMPTY_STRING.equals(layer.getEngName()) &&
+            layer.getRusName() != null && !EMPTY_STRING.equals(layer.getRusName()) &&
+            layer.getMaxIngredients() != null && layer.getMaxIngredients() != 0 &&
+            layerChances != null) {
+
+            layerService.addLayer(layer, layerChances);
+        }
+
+        return "redirect:/ingredients";
+    }
+
     @Autowired
-    IngredientController(CategoryService categoryService){
-        this.categoryService = categoryService;}
+    IngredientController(CategoryService categoryService, LayerService layerService){
+        this.categoryService = categoryService;
+        this.layerService = layerService;
+    }
 }

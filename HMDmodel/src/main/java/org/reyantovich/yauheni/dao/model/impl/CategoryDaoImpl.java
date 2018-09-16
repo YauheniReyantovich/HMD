@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class CategoryDaoImpl implements CategoryDao {
@@ -33,10 +34,11 @@ public class CategoryDaoImpl implements CategoryDao {
             for(HmdObjects object: objects){
                 category = new Category();
                 for(HmdValues value: object.getValues()){
-                    if(value.getValuesId().getAttribute().getAttrId().equals(CategoryAttributes.RUS_NAME_UUID)){
+                    UUID attributeId = value.getValuesId().getAttribute().getAttrId();
+                    if(CategoryAttributes.RUS_NAME_UUID.equals(attributeId)){
                         category.setRusName(value.getValue());
                     }
-                    if(value.getValuesId().getAttribute().getAttrId().equals(CategoryAttributes.ENG_NAME_UUID)){
+                    if(CategoryAttributes.ENG_NAME_UUID.equals(attributeId)){
                         category.setEngName(value.getValue());
                     }
                 }
