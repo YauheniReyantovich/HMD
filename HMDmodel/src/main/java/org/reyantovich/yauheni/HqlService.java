@@ -8,4 +8,6 @@ public final class HqlService {
 
     public static final String GET_TWO_OBJECT_ATTRIBUTES_BY_ANOTHER_ATTRIBUTE = "HQL_GET_TWO_OBJECT_ATTRIBUTES_BY_ANOTHER_ATTRIBUTE";
 
+    public static final String GET_OBJECT_ID_BY_VALUE = "HQL_GET_OBJECT_ID_BY_VALUE";
+
 }

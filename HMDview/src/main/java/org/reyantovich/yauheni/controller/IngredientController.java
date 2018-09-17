@@ -1,8 +1,10 @@
 package org.reyantovich.yauheni.controller;
 
 import org.reyantovich.yauheni.model.pojo.Category;
+import org.reyantovich.yauheni.model.pojo.Ingredient;
 import org.reyantovich.yauheni.model.pojo.Layer;
 import org.reyantovich.yauheni.service.CategoryService;
+import org.reyantovich.yauheni.service.IngredientService;
 import org.reyantovich.yauheni.service.LayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Locale;
+
 @Controller
 public class IngredientController {
 
@@ -22,12 +26,16 @@ public class IngredientController {
 
     private LayerService layerService;
 
+    private IngredientService ingredientService;
+
     @RequestMapping(value = "/ingredients", method = RequestMethod.GET)
-    public String ingredients(Model model){
+    public String ingredients(Model model, Locale locale){
         model.addAttribute("allCategories", categoryService.getAllCategories());
         model.addAttribute("categoryForm", new Category());
         model.addAttribute("allLayers", layerService.getAllLayers());
         model.addAttribute("layerForm", new Layer());
+        model.addAttribute("allIngredients", ingredientService.getAllIngredients(locale));
+        model.addAttribute("ingredientForm", new Ingredient());
         return "ingredients";
     }
 
@@ -52,9 +60,17 @@ public class IngredientController {
         return "redirect:/ingredients";
     }
 
+    @RequestMapping(value = "/addIngredient", method = RequestMethod.POST)
+    public String addIngredient(@ModelAttribute("ingredientForm") Ingredient ingredient, BindingResult bindingResult, Model model, Locale locale){
+        ingredientService.addIngredient(ingredient, locale);
+
+        return "redirect:/ingredients";
+    }
+
     @Autowired
-    IngredientController(CategoryService categoryService, LayerService layerService){
+    IngredientController(CategoryService categoryService, LayerService layerService, IngredientService ingredientService){
         this.categoryService = categoryService;
         this.layerService = layerService;
+        this.ingredientService = ingredientService;
     }
 }

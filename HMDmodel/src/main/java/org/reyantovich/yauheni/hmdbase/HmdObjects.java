@@ -27,10 +27,7 @@ public class HmdObjects implements Serializable{
     private Set<HmdValues> values = new HashSet<>();
 
     @OneToMany(mappedBy = "refsId.object")
-    private Set<HmdRefs> objects = new HashSet<>();
-
-    @OneToMany(mappedBy = "refsId.ref")
-    private Set<HmdRefs> refs = new HashSet<>();
+    private Set<HmdRefs> refsOfObject = new HashSet<>();
 
     public HmdObjects(){}
 
@@ -57,6 +54,14 @@ public class HmdObjects implements Serializable{
     public Set<HmdValues> getValues(){return values;}
 
     public void setValues(Set<HmdValues> values){this.values = values;}
+
+    public Set<HmdRefs> getRefsOfObject() {
+        return refsOfObject;
+    }
+
+    public void setRefsOfObject(Set<HmdRefs> refsOfObject) {
+        this.refsOfObject = refsOfObject;
+    }
 
     @Override
     public String toString() {

@@ -32,6 +32,10 @@
         function submitNewLayer() {
             $('#newLayerForm').submit();
         }
+        function submitNewIngredient(){
+            $('#newIngredientForm').submit();
+
+        }
     </script>
 
         <%@include file="layouts/high_menu_bar.jsp"%>
@@ -58,11 +62,11 @@
                             <spring:message code="ingredients.categories.newCategory"/>
                         </td>
                         <td>
-                            <label for="inputEngCat" class="sr-only">Category</label>
+                            <label for="inputEngCat" class="sr-only"></label>
                             <form:input type="text" path="engName" class="likeCell" AUTOCOMPLETE="off" id="inputEngCat" placeholder="Category"/>
                         </td>
                         <td>
-                            <label for="inputRusCat" class="sr-only">Категория</label>
+                            <label for="inputRusCat" class="sr-only"></label>
                             <form:input type="text" path="rusName" class="likeCell" AUTOCOMPLETE="off" id="inputRusCat" placeholder="Категория"/>
                         </td>
                     </tr>
@@ -150,19 +154,96 @@
                         <spring:message code="ingredients.layers.newLayer"/>
                     </td>
                     <td>
-                        <label for="inputEngLayer" class="sr-only">Layer</label>
+                        <label for="inputEngLayer" class="sr-only"></label>
                         <form:input type="text" path="engName" class="likeCell" AUTOCOMPLETE="off" id="inputEngLayer" placeholder="Layer"/>
                     </td>
                     <td>
-                        <label for="inputRusLayer" class="sr-only">Слой</label>
+                        <label for="inputRusLayer" class="sr-only"></label>
                         <form:input type="text" path="rusName" class="likeCell" AUTOCOMPLETE="off" id="inputRusLayer" placeholder="Слой"/>
                     </td>
                     <td>
-                        <label for="inputMaxIngredients" class="sr-only">Layer</label>
+                        <label for="inputMaxIngredients" class="sr-only"></label>
                         <form:input type="number" path="maxIngredients" class="likeCell" id="inputMaxIngredients" onchange="showEveryIngredientChanceInLayer()"/>
                     </td>
                     <td id="ingredientChances">
 
+                    </td>
+                </tr>
+            </table>
+        </form:form>
+    </div>
+
+    <div class="container margin10px">
+        <form:form method="post" modelAttribute="ingredientForm" class="form-inline" action="addIngredient"  id="newIngredientForm">
+            <table class="demotable normal">
+                <thead>
+                <tr class="centered">
+                    <td>№</td>
+                    <td><spring:message code="ingredients.ingredient.engColumn"/> </td>
+                    <td><spring:message code="ingredients.ingredient.rusColumn"/> </td>
+                    <td><spring:message code="ingredients.ingredient.cost"/></td>
+                    <td><spring:message code="ingredients.ingredient.weight"/></td>
+                    <td><spring:message code="ingredients.ingredient.category"/></td>
+                    <td><spring:message code="ingredients.ingredient.layer"/></td>
+                </tr>
+                <tbody>
+                <c:forEach items="${allIngredients}" var="ingredient">
+                <tr>
+                    <td>${ingredient.nameEng}</td>
+                    <td>${ingredient.nameRus}</td>
+                    <td>${ingredient.cost} BYN</td>
+                    <td>${ingredient.weight} <spring:message code="ingredients.ingredient.gr"/></td>
+                    <td>${ingredient.category}</td>
+                    <td>${ingredient.layer}</td>
+                </tr>
+                </c:forEach>
+                <tfoot>
+                <tr>
+                    <td onClick="submitNewIngredient()" class="centered btn-primary mb-2 hovered">
+                        <spring:message code="ingredients.ingredient.newIngredient"/>
+                    </td>
+                    <td>
+                        <label for="inputEngIngredient" class="sr-only"></label>
+                        <form:input type="text" path="nameEng" class="likeCell" AUTOCOMPLETE="off" id="inputEngIngredient" placeholder="Ingredient"/>
+                    </td>
+                    <td>
+                        <label for="inputRusIngredient" class="sr-only"></label>
+                        <form:input type="text" path="nameRus" class="likeCell" AUTOCOMPLETE="off" id="inputRusIngredient" placeholder="Ингредиент"/>
+                    </td>
+                    <td>
+                        <label for="inputCostIngredient" class="sr-only"></label>
+                        <form:input type="text" path="cost" class="likeCell" AUTOCOMPLETE="off" id="inputCostIngredient" placeholder="BYN"/>
+                    </td>
+                    <td>
+                        <spring:message code="ingredients.ingredient.gr" var="weightLocale"/>
+                        <label for="inputRusIngredient" class="sr-only"></label>
+                        <form:input type="text" path="weight" class="likeCell" AUTOCOMPLETE="off" id="inputRusIngredient" placeholder="${weightLocale}"/>
+                    </td>
+                    <td>
+                        <label for="inputCategoryOfIngredient" class="sr-only"></label>
+                        <form:select id="inputCategoryOfIngredient" path="category" cssClass="likeCell">
+                            <c:forEach items="${allCategories}" var="category">
+                                <c:if test = "${pageContext.response.locale == 'ru'}">
+                                    <option>${category.rusName}</option>
+                                </c:if>
+                                <c:if test = "${pageContext.response.locale == 'en'}">
+                                    <option>${category.engName}</option>
+                                </c:if>
+                            </c:forEach>
+                        </form:select>
+                    </td>
+                    <td>
+                        <label for="inputLayerOfIngredient" class="sr-only"></label>
+                        <form:select id="inputLayerOfIngredient" path="layer" cssClass="likeCell">
+                            <c:forEach items="${allLayers}" var="layer">
+                                <c:if test = "${pageContext.response.locale == 'ru'}">
+                                    <option>${layer.rusName}</option>
+                                </c:if>
+                                <c:if test = "${pageContext.response.locale == 'en'}">
+                                    <option>${layer.engName}</option>
+                                </c:if>
+                            </c:forEach>
+                        </form:select>
                     </td>
                 </tr>
             </table>

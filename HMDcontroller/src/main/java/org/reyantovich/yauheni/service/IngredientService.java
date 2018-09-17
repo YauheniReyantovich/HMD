@@ -1,4 +1,4 @@
-package org.reyantovich.yauheni.dao.model;
+package org.reyantovich.yauheni.service;
 
 import org.reyantovich.yauheni.model.pojo.Ingredient;
 import org.springframework.stereotype.Service;
@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Locale;
 
 @Service
-public interface IngredientDao {
+public interface IngredientService {
 
     List<Ingredient> getAllIngredients(Locale locale);
 

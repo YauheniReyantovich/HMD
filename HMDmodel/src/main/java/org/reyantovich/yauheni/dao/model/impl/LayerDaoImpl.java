@@ -70,8 +70,8 @@ public class LayerDaoImpl implements LayerDao {
         if(layer != null) {
             sessionHolder = sessionHolder.init();
             Session session = sessionHolder.getSession();
-            HmdObjectType categoryObjectType = session.get(HmdObjectType.class, LayerAttributes.LAYER_UUID);
-            HmdObjects object = new HmdObjects(categoryObjectType);
+            HmdObjectType layerObjectType = session.get(HmdObjectType.class, LayerAttributes.LAYER_UUID);
+            HmdObjects object = new HmdObjects(layerObjectType);
             sessionHolder.save(object);
 
             if(layer.getEngName() != null) {
