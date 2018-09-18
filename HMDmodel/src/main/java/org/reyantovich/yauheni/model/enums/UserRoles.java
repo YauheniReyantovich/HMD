@@ -1,8 +1,6 @@
 package org.reyantovich.yauheni.model.enums;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public enum UserRoles {
 

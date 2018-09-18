@@ -2,9 +2,9 @@ package org.reyantovich.yauheni.dao.model.impl;
 
 import org.hibernate.Session;
 import org.reyantovich.yauheni.attributesIds.CategoryAttributes;
+import org.reyantovich.yauheni.dao.ValueDao;
 import org.reyantovich.yauheni.dao.model.CategoryDao;
 import org.reyantovich.yauheni.dao.ObjectDao;
-import org.reyantovich.yauheni.hmdbase.HmdAttributes;
 import org.reyantovich.yauheni.hmdbase.HmdObjectType;
 import org.reyantovich.yauheni.hmdbase.HmdObjects;
 import org.reyantovich.yauheni.hmdbase.HmdValues;
@@ -12,9 +12,7 @@ import org.reyantovich.yauheni.model.pojo.Category;
 import org.reyantovich.yauheni.runner.SessionHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 public class CategoryDaoImpl implements CategoryDao {
@@ -22,6 +20,8 @@ public class CategoryDaoImpl implements CategoryDao {
     private SessionHolder sessionHolder;
 
     private ObjectDao objectDao;
+
+    private ValueDao valueDao;
 
     @Override
     public List<Category> getAllCategories() {
@@ -64,24 +64,19 @@ public class CategoryDaoImpl implements CategoryDao {
             HmdObjects object = new HmdObjects(categoryObjectType);
             sessionHolder.save(object);
 
-            if(category.getEngName() != null) {
-                sessionHolder.save(
-                        new HmdValues(object, session.get(HmdAttributes.class, CategoryAttributes.ENG_NAME_UUID), category.getEngName())
-                );
-            }
-            if(category.getRusName() != null) {
-                sessionHolder.save(
-                        new HmdValues(object, session.get(HmdAttributes.class, CategoryAttributes.RUS_NAME_UUID), category.getRusName())
-                );
-            }
+            Map<UUID, String> values = new HashMap<>();
+            values.put(CategoryAttributes.ENG_NAME_UUID, category.getEngName());
+            values.put(CategoryAttributes.RUS_NAME_UUID, category.getRusName());
+            valueDao.addValues(object, values);
 
             sessionHolder.commit();
             sessionHolder.close();
         }
     }
 
-    public CategoryDaoImpl(SessionHolder sessionHolder, ObjectDao objectDao){
+    public CategoryDaoImpl(SessionHolder sessionHolder, ObjectDao objectDao, ValueDao valueDao){
         this.sessionHolder = sessionHolder;
         this.objectDao = objectDao;
+        this.valueDao = valueDao;
     }
 }

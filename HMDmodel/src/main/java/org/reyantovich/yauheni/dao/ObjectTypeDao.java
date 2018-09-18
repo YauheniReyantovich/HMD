@@ -1,9 +1,5 @@
 package org.reyantovich.yauheni.dao;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.reyantovich.yauheni.hmdbase.HmdObjectType;
 import org.reyantovich.yauheni.runner.SessionHolder;
 import org.springframework.beans.factory.annotation.Autowired;

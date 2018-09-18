@@ -1,29 +1,31 @@
 package org.reyantovich.yauheni.dao.model.impl;
 
 import org.hibernate.Session;
-import org.hibernate.query.Query;
-import org.reyantovich.yauheni.HqlService;
 import org.reyantovich.yauheni.attributesIds.CategoryAttributes;
 import org.reyantovich.yauheni.attributesIds.IngredientAttributes;
 import org.reyantovich.yauheni.attributesIds.LayerAttributes;
-import org.reyantovich.yauheni.attributesIds.UserAttributes;
 import org.reyantovich.yauheni.dao.ObjectDao;
+import org.reyantovich.yauheni.dao.RefDao;
+import org.reyantovich.yauheni.dao.ValueDao;
 import org.reyantovich.yauheni.dao.model.IngredientDao;
 import org.reyantovich.yauheni.hmdbase.*;
 import org.reyantovich.yauheni.model.pojo.Ingredient;
-import org.reyantovich.yauheni.model.pojo.Layer;
-import org.reyantovich.yauheni.model.pojo.User;
 import org.reyantovich.yauheni.runner.SessionHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 public class IngredientDaoImpl implements IngredientDao {
 
+    private final static String LOCALE_RU = "ru";
+
     private ObjectDao objectDao;
+
+    private ValueDao valueDao;
+
+    private RefDao refDao;
 
     private SessionHolder sessionHolder;
 
@@ -63,16 +65,16 @@ public class IngredientDaoImpl implements IngredientDao {
                     attributeId = ref.getRefsId().getAttribute().getAttrId();
                     if(IngredientAttributes.CATEGORY_UUID.equals(attributeId)){
                         //Берем атрибут категории/слоя в зависимости от локализации
-                        refAttribute = sessionHolder.getSession().get(HmdAttributes.class, ("ru".equals(locale.getLanguage()) ? CategoryAttributes.RUS_NAME_UUID : CategoryAttributes.ENG_NAME_UUID));
+                        refAttribute = sessionHolder.getSession().get(HmdAttributes.class, (LOCALE_RU.equals(locale.getLanguage()) ? CategoryAttributes.RUS_NAME_UUID : CategoryAttributes.ENG_NAME_UUID));
                         //Берем имя категории/слоя по созданному ValuesId
                         CatOrLayerName = sessionHolder.getSession().get(HmdValues.class, new ValuesId(ref.getRef()/*ссылка на объект категории*/, refAttribute));
                         ingredient.setCategory(CatOrLayerName.getValue());
                     }
                     if(IngredientAttributes.LAYER_UUID.equals(attributeId)){
                         //Берем атрибут категории/слоя в зависимости от локализации
-                        refAttribute = sessionHolder.getSession().get(HmdAttributes.class, ("ru".equals(locale.getLanguage()) ? LayerAttributes.RUS_NAME_UUID : LayerAttributes.ENG_NAME_UUID));
+                        refAttribute = sessionHolder.getSession().get(HmdAttributes.class, (LOCALE_RU.equals(locale.getLanguage()) ? LayerAttributes.RUS_NAME_UUID : LayerAttributes.ENG_NAME_UUID));
                         //Берем имя категории/слоя по созданному ValuesId
-                        CatOrLayerName = sessionHolder.getSession().get(HmdValues.class, new ValuesId(ref.getRef()/*ссылка на объект категории*/, refAttribute));
+                        CatOrLayerName = sessionHolder.getSession().get(HmdValues.class, new ValuesId(ref.getRef()/*ссылка на объект слоя*/, refAttribute));
                         ingredient.setLayer(CatOrLayerName.getValue());
                     }
                 }
@@ -92,61 +94,40 @@ public class IngredientDaoImpl implements IngredientDao {
     @Override
     public void addIngredient(Ingredient ingredient, Locale locale) {
         if(ingredient != null) {
-            ResourceBundle resourceBundle = ResourceBundle.getBundle(HqlService.SQL_PROPERTIES);
             sessionHolder = sessionHolder.init();
             Session session = sessionHolder.getSession();
             HmdObjectType ingredientObjectType = session.get(HmdObjectType.class, IngredientAttributes.INGREDIENT_UUID);
+            /*New object*/
             HmdObjects object = new HmdObjects(ingredientObjectType);
             sessionHolder.save(object);
 
-            if (ingredient.getNameEng() != null) {
-                sessionHolder.save(
-                        new HmdValues(object, session.get(HmdAttributes.class, IngredientAttributes.NAME_ENG_UUID), ingredient.getNameEng())
-                );
-            }
-            if (ingredient.getNameRus() != null) {
-                sessionHolder.save(
-                        new HmdValues(object, session.get(HmdAttributes.class, IngredientAttributes.NAME_RUS_UUID), ingredient.getNameRus())
-                );
-            }
-            if (ingredient.getCost() != null) {
-                sessionHolder.save(
-                        new HmdValues(object, session.get(HmdAttributes.class, IngredientAttributes.COST_UUID), ingredient.getCost())
-                );
-            }
-            if (ingredient.getWeight() != null) {
-                sessionHolder.save(
-                        new HmdValues(object, session.get(HmdAttributes.class, IngredientAttributes.WEIGHT_UUDI), ingredient.getWeight())
-                );
-            }
+            /*Add values to new object*/
+            Map<UUID, String> values = new HashMap<>();
+            values.put(IngredientAttributes.NAME_ENG_UUID, ingredient.getNameEng());
+            values.put(IngredientAttributes.NAME_RUS_UUID, ingredient.getNameRus());
+            values.put(IngredientAttributes.COST_UUID, ingredient.getCost());
+            values.put(IngredientAttributes.WEIGHT_UUDI, ingredient.getWeight());
+            valueDao.addValues(object, values);
 
-            Query sqlQuery = session.createQuery(resourceBundle.getString(HqlService.GET_OBJECT_ID_BY_VALUE));
-
-            sqlQuery.setParameter("value", ingredient.getCategory());
-            sqlQuery.setParameter("objOTId", CategoryAttributes.CATEGORY);
-            sqlQuery.setParameter("attrId", "ru".equals(locale.getLanguage()) ? CategoryAttributes.RUS_NAME : CategoryAttributes.ENG_NAME);
-
-            Object result = sqlQuery.getSingleResult();
-
+            /*Add refs to new object*/
+            Map<UUID, HmdObjects> refs = new HashMap<>();
+            HmdObjects ref;
             if(ingredient.getCategory() != null) {
-                sessionHolder.save(
-                        new HmdRefs(session.get(HmdAttributes.class, IngredientAttributes.CATEGORY_UUID), object, (HmdObjects) result)
-                );
+                ref = objectDao.getObjectByValue(
+                        CategoryAttributes.CATEGORY,
+                        LOCALE_RU.equals(locale.getLanguage()) ? CategoryAttributes.RUS_NAME : CategoryAttributes.ENG_NAME,
+                        ingredient.getCategory());
+                refs.put(IngredientAttributes.CATEGORY_UUID, ref);
             }
-
-            sqlQuery = session.createQuery(resourceBundle.getString(HqlService.GET_OBJECT_ID_BY_VALUE));
-
-            sqlQuery.setParameter("value", ingredient.getLayer());
-            sqlQuery.setParameter("objOTId", LayerAttributes.LAYER);
-            sqlQuery.setParameter("attrId", "ru".equals(locale.getLanguage()) ? LayerAttributes.RUS_NAME : LayerAttributes.ENG_NAME);
-
-            result = sqlQuery.getSingleResult();
-
             if(ingredient.getLayer() != null) {
-                sessionHolder.save(
-                        new HmdRefs(session.get(HmdAttributes.class, IngredientAttributes.LAYER_UUID), object, (HmdObjects) result)
+                ref = objectDao.getObjectByValue(
+                        LayerAttributes.LAYER,
+                        LOCALE_RU.equals(locale.getLanguage()) ? LayerAttributes.RUS_NAME : LayerAttributes.ENG_NAME,
+                        ingredient.getLayer()
                 );
+                refs.put(IngredientAttributes.LAYER_UUID, ref);
             }
+            refDao.addRefs(object, refs);
 
             sessionHolder.commit();
             sessionHolder.close();
@@ -154,8 +135,10 @@ public class IngredientDaoImpl implements IngredientDao {
     }
 
     @Autowired
-    IngredientDaoImpl(ObjectDao objectDao, SessionHolder sessionHolder){
+    IngredientDaoImpl(ObjectDao objectDao, ValueDao valueDao, RefDao refDao, SessionHolder sessionHolder){
         this.sessionHolder = sessionHolder;
+        this.valueDao = valueDao;
+        this.refDao = refDao;
         this.objectDao = objectDao;
     }
 }

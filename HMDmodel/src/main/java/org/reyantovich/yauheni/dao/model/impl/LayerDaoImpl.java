@@ -3,8 +3,8 @@ package org.reyantovich.yauheni.dao.model.impl;
 import org.hibernate.Session;
 import org.reyantovich.yauheni.attributesIds.LayerAttributes;
 import org.reyantovich.yauheni.dao.ObjectDao;
+import org.reyantovich.yauheni.dao.ValueDao;
 import org.reyantovich.yauheni.dao.model.LayerDao;
-import org.reyantovich.yauheni.hmdbase.HmdAttributes;
 import org.reyantovich.yauheni.hmdbase.HmdObjectType;
 import org.reyantovich.yauheni.hmdbase.HmdObjects;
 import org.reyantovich.yauheni.hmdbase.HmdValues;
@@ -12,10 +12,7 @@ import org.reyantovich.yauheni.model.pojo.Layer;
 import org.reyantovich.yauheni.runner.SessionHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -26,6 +23,8 @@ public class LayerDaoImpl implements LayerDao {
     private SessionHolder sessionHolder;
 
     private ObjectDao objectDao;
+
+    private ValueDao valueDao;
 
     @Override
     public List<Layer> getAllLayers() {
@@ -74,27 +73,13 @@ public class LayerDaoImpl implements LayerDao {
             HmdObjects object = new HmdObjects(layerObjectType);
             sessionHolder.save(object);
 
-            if(layer.getEngName() != null) {
-                sessionHolder.save(
-                        new HmdValues(object, session.get(HmdAttributes.class, LayerAttributes.ENG_NAME_UUID), layer.getEngName())
-                );
-            }
-            if(layer.getRusName() != null) {
-                sessionHolder.save(
-                        new HmdValues(object, session.get(HmdAttributes.class, LayerAttributes.RUS_NAME_UUID), layer.getRusName())
-                );
-            }
-            if(layer.getMaxIngredients() != null) {
-                sessionHolder.save(
-                        new HmdValues(object, session.get(HmdAttributes.class, LayerAttributes.MAXIMUM_INGREDIENTS_UUID), layer.getMaxIngredients().toString())
-                );
-            }
-            if(layerChances != null) {
-                String layerChancesStr = Arrays.toString(layerChances);
-                sessionHolder.save(
-                        new HmdValues(object, session.get(HmdAttributes.class, LayerAttributes.INGREDIENTS_CHANCE_UUID), layerChancesStr.substring(1, layerChancesStr.length()-1))
-                );
-            }
+            Map<UUID, String> values = new HashMap<>();
+            values.put(LayerAttributes.ENG_NAME_UUID, layer.getEngName());
+            values.put(LayerAttributes.RUS_NAME_UUID, layer.getRusName());
+            values.put(LayerAttributes.MAXIMUM_INGREDIENTS_UUID, layer.getMaxIngredients().toString());
+            String layerChancesStr = Arrays.toString(layerChances);
+            values.put(LayerAttributes.INGREDIENTS_CHANCE_UUID, layerChancesStr.substring(1, layerChancesStr.length()-1));
+            valueDao.addValues(object, values);
 
             sessionHolder.commit();
             sessionHolder.close();
@@ -102,8 +87,9 @@ public class LayerDaoImpl implements LayerDao {
 
     }
 
-    public LayerDaoImpl(SessionHolder sessionHolder, ObjectDao objectDao){
+    public LayerDaoImpl(SessionHolder sessionHolder, ObjectDao objectDao, ValueDao valueDao){
         this.sessionHolder = sessionHolder;
         this.objectDao = objectDao;
+        this.valueDao = valueDao;
     }
 }

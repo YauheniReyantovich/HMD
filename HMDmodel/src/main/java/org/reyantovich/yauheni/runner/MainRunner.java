@@ -1,7 +1,5 @@
 package org.reyantovich.yauheni.runner;
 
-import org.reyantovich.yauheni.attributesIds.IngredientAttributes;
-import org.reyantovich.yauheni.attributesIds.LayerAttributes;
 import org.reyantovich.yauheni.dao.*;
 import org.reyantovich.yauheni.hmdbase.HmdObjectType;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
