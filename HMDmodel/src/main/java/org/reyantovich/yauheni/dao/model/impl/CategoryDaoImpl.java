@@ -41,6 +41,9 @@ public class CategoryDaoImpl implements CategoryDao {
                     if(CategoryAttributes.ENG_NAME_UUID.equals(attributeId)){
                         category.setEngName(value.getValue());
                     }
+                    if(CategoryAttributes.PRIORITY_UUID.equals(attributeId)){
+                        category.setPriority(Integer.parseInt(value.getValue()));
+                    }
                 }
                 categories.add(category);
             }
@@ -67,6 +70,7 @@ public class CategoryDaoImpl implements CategoryDao {
             Map<UUID, String> values = new HashMap<>();
             values.put(CategoryAttributes.ENG_NAME_UUID, category.getEngName());
             values.put(CategoryAttributes.RUS_NAME_UUID, category.getRusName());
+            values.put(CategoryAttributes.PRIORITY_UUID, category.getPriority().toString());
             valueDao.addValues(object, values);
 
             sessionHolder.commit();

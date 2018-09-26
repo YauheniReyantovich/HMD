@@ -11,5 +11,7 @@ public final class CategoryAttributes {
     public static final UUID RUS_NAME_UUID =    UUID.fromString(RUS_NAME);
     public static final String ENG_NAME =       "08991b10-ac39-4076-addd-7ddca7af1771";
     public static final UUID ENG_NAME_UUID =    UUID.fromString(ENG_NAME);
+    public static final String PRIORITY =       "9b784d97-3a93-4c07-8c8b-02e57add5429";
+    public static final UUID PRIORITY_UUID =    UUID.fromString(PRIORITY);
 
 }

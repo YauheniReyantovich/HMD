@@ -54,6 +54,7 @@
                         <tr>
                             <td>${category.engName}</td>
                             <td>${category.rusName}</td>
+                            <td>${category.priority}</td>
                         </tr>
                     </c:forEach>
                     <tfoot>
@@ -68,6 +69,11 @@
                         <td>
                             <label for="inputRusCat" class="sr-only"></label>
                             <form:input type="text" path="rusName" class="likeCell" AUTOCOMPLETE="off" id="inputRusCat" placeholder="Категория"/>
+                        </td>
+                        <td>
+                            <spring:message code="ingredients.categories.priority" var="priorityLocale"/>
+                            <label for="inputPriority" class="sr-only"></label>
+                            <form:input type="number" step="1" min="0" path="priority" class="likeCell" AUTOCOMPLETE="off" id="inputPriority" placeholder="${priorityLocale}"/>
                         </td>
                     </tr>
 
@@ -143,7 +149,7 @@
                         <td>${layer.maxIngredients}</td>
                         <td>
                             <c:forEach items="${layer.ingredientChance}" var="chance">
-                                <span>${chance}&nbsp &nbsp</span>
+                                <span>${chance}%&nbsp &nbsp</span>
                             </c:forEach>
                         </td>
                     </tr>

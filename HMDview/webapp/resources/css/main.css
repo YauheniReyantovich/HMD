@@ -219,7 +219,7 @@ hr{
     top: 0;
     width: 30px;
     height: 100%;
-    background: url(../images/plus.png) no-repeat center center;
+    background: url(../images/arrow-of-double-down.jpg) no-repeat center center;
     background-size: 50%;
     cursor: pointer;
     transition: .2s;
@@ -285,6 +285,45 @@ hr{
 .likeCell{
     border: none;
     background: transparent;
-    outline:none;
+    outline: none;
     width: 100%;
+}
+
+.ingredientButton{
+    background-color: #fff;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.ingredientButton:focus{
+    outline: none;
+}
+
+.ingredientButton:before{
+    position: absolute;
+    content: '';
+    right: 0;
+    top: 0;
+    width: 30px;
+    height: 100%;
+    background: url(../images/plus.png) no-repeat center center;
+    background-size: 50%;
+    cursor: pointer;
+    transition: .2s;
+    transition-timing-function: ease-in-out;
+}
+.ingredientButton.open:before{
+    transform: rotate(180deg);
+}
+
+.navbar-toggler:focus{
+    outline: none;
+}
+
+.fa-angle-double-down:focus{
+    outline: none;
 }

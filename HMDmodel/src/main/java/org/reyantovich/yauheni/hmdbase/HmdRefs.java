@@ -11,15 +11,10 @@ public class HmdRefs implements Serializable{
     @EmbeddedId
     private RefsId refsId;
 
-    @ManyToOne
-    @JoinColumn(name = "ref")
-    private HmdObjects ref;
-
     public HmdRefs(){}
 
     public HmdRefs(HmdAttributes attribute, HmdObjects object, HmdObjects ref) {
-        this.refsId = new RefsId(attribute, object);
-        this.ref = ref;
+        this.refsId = new RefsId(attribute, object, ref);
     }
 
     public RefsId getRefsId() {
@@ -30,33 +25,23 @@ public class HmdRefs implements Serializable{
         this.refsId = refsId;
     }
 
-    public HmdObjects getRef() {
-        return ref;
-    }
-
-    public void setRef(HmdObjects ref) {
-        this.ref = ref;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         HmdRefs hmdRefs = (HmdRefs) o;
-        return Objects.equals(refsId, hmdRefs.refsId) &&
-                Objects.equals(ref, hmdRefs.ref);
+        return Objects.equals(refsId, hmdRefs.refsId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(refsId, ref);
+        return Objects.hash(refsId);
     }
 
     @Override
     public String toString() {
         return "HmdRefs{" +
                 "refsId=" + refsId +
-                ", ref=" + ref +
                 '}';
     }
 }

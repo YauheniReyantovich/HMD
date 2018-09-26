@@ -58,6 +58,14 @@ public class HmdObjectType implements Serializable {
         this.objects = objects;
     }
 
+    public Set<HmdAttributes> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Set<HmdAttributes> attributes) {
+        this.attributes = attributes;
+    }
+
     @Override
     public String toString() {
         return "HmdObjectType{" +
